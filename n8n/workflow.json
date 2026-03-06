@@ -1,0 +1,5134 @@
+{
+  "name": "you_worknamespace",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        3456
+      ],
+      "id": "f5bc25e3-e098-41cb-8e93-6324c5a4cd25",
+      "name": "OPENAI 4.1 MINI1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "Y5rm4TXT9mTLIczb",
+          "name": "TESTING"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [
+        848,
+        3472
+      ],
+      "id": "45da089c-e97d-4448-9964-086d9c75ddd3",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ed4c7847-6cd3-4967-961f-8432dc9fc8f0",
+              "leftValue": "={{ $json.output.escalation }",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -2416,
+        6128
+      ],
+      "id": "fd316add-a261-434f-aff5-648c52b39cf5",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0a63122b-d853-4518-a67b-08d80d5fd377",
+              "name": "Summary",
+              "value": "=Reason: {{ $('Complaint').item.json.output.reason }} &&  \n\nAi Reply: {{ $('Complaint').item.json.output.ai_reply }} &&\n\nPhone number customer{{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1872,
+        5920
+      ],
+      "id": "a9f8b20f-4890-4003-b81c-2d04c4286059",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0a63122b-d853-4518-a67b-08d80d5fd377",
+              "name": "Output",
+              "value": "={{ $json.output.ai_reply }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1968,
+        6304
+      ],
+      "id": "1ada95a2-4c88-413c-b9dc-cd385e9e9f88",
+      "name": "Edit Fields7"
+    },
+    {
+      "parameters": {
+        "amount": "={{ 7 }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -2048,
+        5920
+      ],
+      "id": "c28840b0-4904-45be-92a2-01b5e4f4209e",
+      "name": "Wait7",
+      "webhookId": "996e5161-ba71-4b2b-a3fc-a0c30d80f078"
+    },
+    {
+      "parameters": {
+        "amount": "={{ 7 }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -2112,
+        6304
+      ],
+      "id": "7dbc815f-d3f9-41b9-9a72-e1558497d84a",
+      "name": "Wait8",
+      "webhookId": "996e5161-ba71-4b2b-a3fc-a0c30d80f078"
+    },
+    {
+      "parameters": {
+        "content": "## Human Take over",
+        "height": 320,
+        "width": 1104,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2224,
+        5840
+      ],
+      "typeVersion": 1,
+      "id": "cf302531-a0c0-4fb4-8d82-cce623df715c",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## AI Take an Action",
+        "height": 320,
+        "width": 944
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2192,
+        6208
+      ],
+      "typeVersion": 1,
+      "id": "19b0fdf5-a659-47ad-a8bb-bc881c5253b3",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (5 - 2 + 1) + 2) }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -3200,
+        1472
+      ],
+      "id": "6d2c3b3a-49cd-41b5-853f-e4656b2462b5",
+      "name": "Wait9",
+      "webhookId": "39cba8b9-40ed-4928-ae1a-e5c64ad4e729"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"name\": \"decoration_intent_parser\",\n  \"description\": \"Parse user messages into a single decoration-related intent with structured fields\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"intent\": {\n        \"type\": \"string\",\n        \"description\": \"Single intent only\",\n        \"enum\": [\n          \"availability_check\",\n          \"booking_request\",\n          \"reschedule_event\",\n          \"cancel_booking\",\n          \"complaint\",\n          \"general_question\"\n        ]\n      },\n      \"event_type\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Type of event such as aqiqah, wedding, birthday\"\n      },\n      \"event_date\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Event date in YYYY-MM-DD format\"\n      },\n      \"client_name\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Client name if mentioned\"\n      },\n      \"package_name\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Decoration package name if mentioned\"\n      },\n      \"partner_names\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Names of partners for engagement or wedding\"\n      },\n      \"baby_name\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Baby name for aqiqah events\"\n      },\n      \"urgency\": {\n        \"type\": \"string\",\n        \"enum\": [\"low\", \"medium\", \"high\"]\n      },\n      \"confidence\": {\n        \"type\": \"number\",\n        \"minimum\": 0,\n        \"maximum\": 1\n      }\n    },\n    \"required\": [\n      \"intent\",\n      \"urgency\",\n      \"confidence\"\n    ],\n    \"additionalProperties\": false\n  }\n}\n",
+        "autoFix": "={{ false }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -6704,
+        3184
+      ],
+      "id": "f8037942-02a7-4c08-9094-d76b181b2c57",
+      "name": "Ouput Intent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7502262-9aaa-4b4c-9cc6-8813d46c39c4",
+              "name": "text",
+              "value": "={{ $('Booking Handling').item.json.output.ai_reply.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1936,
+        3792
+      ],
+      "id": "58a5c795-3ffb-4f36-9333-2af8a1b5a3e7",
+      "name": "text"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (5 - 2 + 1) + 2) }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -3984,
+        3520
+      ],
+      "id": "94f62654-d155-4102-b97b-8c82d91ecc46",
+      "name": "Wait10",
+      "webhookId": "39cba8b9-40ed-4928-ae1a-e5c64ad4e729"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (5 - 2 + 1) + 2) }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -3664,
+        6128
+      ],
+      "id": "3f475f17-ff8a-4065-9252-34447611f54e",
+      "name": "Wait11",
+      "webhookId": "39cba8b9-40ed-4928-ae1a-e5c64ad4e729"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (5 - 2 + 1) + 2) }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -2384,
+        1472
+      ],
+      "id": "6e1e1a6b-c55d-4ecd-81df-19c320a17cfb",
+      "name": "Wait",
+      "webhookId": "39cba8b9-40ed-4928-ae1a-e5c64ad4e729"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "delay": "={{ Math.floor($json.text.split(\" \").length / 3)*1000 + Math.floor(Math.random() * (5 - 2 + 1) + 2)*1000 }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -2032,
+        1472
+      ],
+      "id": "510be942-07e1-4c97-ba9d-d450943ce602",
+      "name": "Send presence1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "=use this to send pricelist engagement/lamaran",
+        "documentId": {
+          "__rl": true,
+          "value": "1DwH7fyzgmgLC-9K1ANqDNlNU29RtqkWtWLaI2Fu_3Hs",
+          "mode": "list",
+          "cachedResultName": "Pricelist dekor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DwH7fyzgmgLC-9K1ANqDNlNU29RtqkWtWLaI2Fu_3Hs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 454078633,
+          "mode": "list",
+          "cachedResultName": "Engagement Package",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DwH7fyzgmgLC-9K1ANqDNlNU29RtqkWtWLaI2Fu_3Hs/edit#gid=454078633"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -2704,
+        1600
+      ],
+      "id": "0fdc34fe-cb86-47f9-9ef4-3923a7a64c42",
+      "name": "Price Engagement",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uBP8QMXI8T662oju",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "use this to send pricelist aqiqah",
+        "documentId": {
+          "__rl": true,
+          "value": "1DwH7fyzgmgLC-9K1ANqDNlNU29RtqkWtWLaI2Fu_3Hs",
+          "mode": "list",
+          "cachedResultName": "Pricelist dekor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DwH7fyzgmgLC-9K1ANqDNlNU29RtqkWtWLaI2Fu_3Hs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Aqiqah Package",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DwH7fyzgmgLC-9K1ANqDNlNU29RtqkWtWLaI2Fu_3Hs/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -2608,
+        1600
+      ],
+      "id": "ef08e3d9-2c41-424e-b44e-a5de3e10f0f8",
+      "name": "Aqiqah Price",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uBP8QMXI8T662oju",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "use this to send pricelist Birthday",
+        "documentId": {
+          "__rl": true,
+          "value": "1DwH7fyzgmgLC-9K1ANqDNlNU29RtqkWtWLaI2Fu_3Hs",
+          "mode": "list",
+          "cachedResultName": "Pricelist dekor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DwH7fyzgmgLC-9K1ANqDNlNU29RtqkWtWLaI2Fu_3Hs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 414117641,
+          "mode": "list",
+          "cachedResultName": "Birthday Package",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DwH7fyzgmgLC-9K1ANqDNlNU29RtqkWtWLaI2Fu_3Hs/edit#gid=414117641"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -2512,
+        1600
+      ],
+      "id": "d9793787-5dc6-4923-b6ef-944b2cdb29b8",
+      "name": "Birthday Price",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uBP8QMXI8T662oju",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7502262-9aaa-4b4c-9cc6-8813d46c39c4",
+              "name": "text",
+              "value": "={{ $('General').item.json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2208,
+        1472
+      ],
+      "id": "aa58118b-5695-4383-a676-2c75e6ec3237",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "## AI Take an Action",
+        "height": 304,
+        "width": 384
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2816,
+        1408
+      ],
+      "typeVersion": 1,
+      "id": "c0c146c8-7f82-4eab-97af-7dc3b2b3f2ab",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "## AI Take an Action",
+        "height": 320,
+        "width": 480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2912,
+        6096
+      ],
+      "typeVersion": 1,
+      "id": "45b321a5-8b12-4f76-a425-1572a1160e5a",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (5 - 2 + 1) + 2) }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1744,
+        3792
+      ],
+      "id": "7d9d1c3c-126e-48a4-bad4-2522ede8957c",
+      "name": "Delay",
+      "webhookId": "39cba8b9-40ed-4928-ae1a-e5c64ad4e729"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -2800,
+        1600
+      ],
+      "id": "3c251d1e-767c-41c2-84c8-41c48080eb1a",
+      "name": "Gemini 2.5 flash",
+      "credentials": {
+        "openRouterApi": {
+          "id": "Y5rm4TXT9mTLIczb",
+          "name": "TESTING"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"intent\": {\n    \"booking_approved\": false\n  },\n  \"customer_data\": {\n    \"customer_name\": \"\",\n    \"event_type\": \"\",\n    \"event_date\": \"\",\n    \"package_name\": \"\",\n    \"address\": \"\",\n    \"request\": \"\",\n    \"baby_name\": \"\",\n    \"partner_names\": \"\",\n    \"phone_number\": \"\",\n    \"lock_date\": \"\"\n  },\n  \"ai_reply\": {\n    \"message\": \"\",\n    \"next_action\": \"ready_for_booking\"\n  }\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -2816,
+        3664
+      ],
+      "id": "158c1088-3ba3-4557-ac46-3e99d74b8e36",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "14feb4b4-3f70-4ff5-a158-4c697f9dd5d6",
+              "name": "Message",
+              "value": "={{ $node[\"Webhook\"].json.body.data.message.conversation }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3248,
+        3520
+      ],
+      "id": "534c7234-d229-4b69-8426-275904018aa0",
+      "name": "Clean Data"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "='{{ $('Webhook').item.json.body.data.key.remoteJid }}'",
+        "contextWindowLength": 300
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1216,
+        3472
+      ],
+      "id": "c20e0273-9588-4c55-b16f-1066770e4f01",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE conversation_state\nSET\n  active_intent = '{{ $json.final_intent }}',\n  intent_lock = true,\n  booking_active = true,\n  step = 'start',\n  updated_at = NOW()\nWHERE phone = '{{ $node[\"Webhook\"].json.body.data.key.remoteJid }}';\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -5296,
+        3024
+      ],
+      "id": "733cd0eb-4aeb-43f6-ad1e-e8db5be16859",
+      "name": "Update",
+      "credentials": {
+        "postgres": {
+          "id": "YoSdoN8yhfp0ZOph",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "cdbdb299-35c4-4cce-bb27-e20a5a7637b9",
+              "leftValue": "={{ $json.body.data.key.fromMe }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -7808,
+        3008
+      ],
+      "id": "eaf08502-a700-476f-8e65-94b9c27c9f43",
+      "name": "logical number"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b274aec9-7c20-49ef-a07a-08e8c2624fac",
+              "leftValue": "={{ $json.intent_lock }}",
+              "rightValue": "false",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -7600,
+        3280
+      ],
+      "id": "d1aa6b94-f31b-450c-b5dd-42f898e4abc0",
+      "name": "Logical Intent",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.final_intent }}",
+                    "rightValue": "=product_inquiry",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "5df37740-eccc-43b6-bdea-77c3e4c6efe7"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "=product_inquiry"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "4714f076-a7b8-45a8-9674-9affddd8ebf4",
+                    "leftValue": "={{ $json.final_intent }}",
+                    "rightValue": "=availability_check",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "availability_check"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "4cfb1162-851e-484b-82c3-73f9acbf9c6c",
+                    "leftValue": "={{ $json.final_intent }}",
+                    "rightValue": "=booking_request",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "booking_request"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "8952f6ac-b286-4727-bde1-0bbe2b4297d2",
+                    "leftValue": "={{ $json.final_intent }}",
+                    "rightValue": "=reschedule_event",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "reschedule_event"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "a7435fb8-6ea5-40dd-8ef4-91a8b737deb8",
+                    "leftValue": "={{ $json.final_intent }}",
+                    "rightValue": "=cancel_booking",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "cancel_booking"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "a84d2f1a-4921-4cf1-bedc-b4736308da49",
+                    "leftValue": "={{ $json.final_intent }}",
+                    "rightValue": "=complaint",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "complaint"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "b76b6ccf-3161-4821-b20b-4b3d2b6b4425",
+                    "leftValue": "={{ $json.final_intent }}",
+                    "rightValue": "=general_question",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "general_question"
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": false
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -4896,
+        3232
+      ],
+      "id": "589d8f3f-5b99-4d2b-9a4b-57e31763d423",
+      "name": "classfy",
+      "alwaysOutputData": false,
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "41c1d16e-91c4-4e00-a816-5165febbbf79",
+              "name": "text",
+              "value": "={{ $json.output.ai_reply }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2032,
+        2752
+      ],
+      "id": "d18ddabb-557d-446d-a6df-27a19f26813c",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "69c18453-f3e6-45d8-8c7e-b56ae342c333",
+              "name": "next_action",
+              "value": "=cancellation_completed",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1264,
+        4528
+      ],
+      "id": "9202b3aa-5f60-42fb-95f5-ef75f864a616",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"customer\": {\n    \"name\": \"\"\n  },\n  \"summary_reason\": \"\",\n  \"ai_reply\": {\n    \"message\": \"\",\n    \"next_action\": \"process | cancellation_confirmed | cancellation_completed\"\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -2976,
+        4816
+      ],
+      "id": "f0afe1db-903b-4de6-bced-d8751a72f115",
+      "name": "Structured Output Parser5"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "putrianastasya744@gmail.com",
+          "mode": "list",
+          "cachedResultName": "putrianastasya744@gmail.com"
+        },
+        "start": "={{ $('Code in JavaScript').item.json.event_date }}",
+        "end": "={{ $('Code in JavaScript').item.json.event_date }}",
+        "useDefaultReminders": false,
+        "additionalFields": {
+          "description": "=Customer name : {{ $('Code in JavaScript').item.json.customer_name }}\n\nJenis acara:{{ $('Code in JavaScript').item.json.event_type }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -1840,
+        3424
+      ],
+      "id": "a9d4f47d-836a-4cbd-95b7-aa79588fdbd1",
+      "name": "Create an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Q03Cc9IFBGQctIHA",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1104,
+        4528
+      ],
+      "id": "bbf1c259-209a-4f83-90ac-444c91deca86",
+      "name": "Wait1",
+      "webhookId": "5fd2b679-c744-4053-be33-32d006df7b41"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (5 - 2 + 1) + 2) }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -3664,
+        2512
+      ],
+      "id": "e6c748f9-691f-4caf-9412-86da8a534751",
+      "name": "Wait12",
+      "webhookId": "39cba8b9-40ed-4928-ae1a-e5c64ad4e729"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "14feb4b4-3f70-4ff5-a158-4c697f9dd5d6",
+              "name": "Message",
+              "value": "={{ $node[\"Webhook\"].json.body.data.message.conversation }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3200,
+        2512
+      ],
+      "id": "cdad3725-684e-46fe-8bb0-ab8cab2e027d",
+      "name": "Clean Data1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageText": "={{ $('Edit Fields1').item.json.text }}",
+        "options_message": {
+          "quoted": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1664,
+        2752
+      ],
+      "id": "d474f9b4-46c9-471b-9c98-014151fbedcd",
+      "name": "Send text3",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (5 - 2 + 1) + 2) }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -3696,
+        4672
+      ],
+      "id": "9c74a656-ff77-43cb-b73c-f65436561799",
+      "name": "Wait13",
+      "webhookId": "39cba8b9-40ed-4928-ae1a-e5c64ad4e729"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageId": "={{ $node[\"Webhook\"].json.body.data.key.id }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -3440,
+        4672
+      ],
+      "id": "05d7f77a-00ae-4826-bac5-e2e437cfcc4b",
+      "name": "Mark messages as read4",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "14feb4b4-3f70-4ff5-a158-4c697f9dd5d6",
+              "name": "Message",
+              "value": "={{ $node[\"Webhook\"].json.body.data.message.conversation }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3216,
+        4672
+      ],
+      "id": "c8cc0065-9174-4bad-8684-c7307aab6a36",
+      "name": "Clean Data3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "951f9a33-26bc-425e-b6ed-d9212b5d840e",
+              "leftValue": "={{ $('Booking Handling').item.json.output.ai_reply.next_action }}",
+              "rightValue": "booking_confirmed",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -2272,
+        3520
+      ],
+      "id": "4454d629-e412-44e5-af24-ddc1841dd6f4",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "077693EA84A2-4B74-A39B-66D8C7B7AC55",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -8016,
+        3008
+      ],
+      "id": "7358d344-26bc-4927-9b1d-6c1485ffa737",
+      "name": "Webhook",
+      "webhookId": "50687243-ab18-42d7-82ce-2b9a965e6aff"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageId": "={{ $node[\"Webhook\"].json.body.data.key.id }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -3040,
+        1472
+      ],
+      "id": "9e19f988-6040-41e8-9f26-4176634030d4",
+      "name": "Mark messages as read2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "23cc9f41-4580-44a6-a2a7-790cdb7c4588",
+              "name": "instance",
+              "value": "={{ $json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "acb22c9a-50d1-402b-bd18-eef71056367e",
+              "name": "message",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "59214160-da00-49f3-9027-8700404ac4d4",
+              "name": "phone",
+              "value": "={{ $json.body.data.key.remoteJid }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -7584,
+        3024
+      ],
+      "id": "440e5bd6-6a19-481d-9d7d-d0dab1d28d52",
+      "name": "Edit Fields10"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "14feb4b4-3f70-4ff5-a158-4c697f9dd5d6",
+              "name": "Message",
+              "value": "={{ $node[\"Webhook\"].json.body.data.message.conversation }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3392,
+        1472
+      ],
+      "id": "8414579f-588a-4a56-bea4-d4390c15ef4f",
+      "name": "Clean Data4"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageText": "={{ $('Edit Fields').item.json.text }}",
+        "options_message": {
+          "quoted": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1808,
+        1472
+      ],
+      "id": "b3697f02-404c-441a-b65a-5559756e4ae4",
+      "name": "Send text1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "delay": "={{ Math.floor($json.text.split(\" \").length / 3)*1000 + Math.floor(Math.random() * (5 - 2 + 1) + 2)*1000 }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1840,
+        2752
+      ],
+      "id": "04723120-c763-48f5-bc11-0bf5e0c8c45a",
+      "name": "Send presence4",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageId": "={{ $node[\"Webhook\"].json.body.data.key.id }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -3536,
+        3520
+      ],
+      "id": "2397d74d-0378-4c90-b2ac-e0c137b8751f",
+      "name": "Mark messages as read",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageId": "={{ $node[\"Webhook\"].json.body.data.key.id }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -3440,
+        2512
+      ],
+      "id": "fb08e106-4a34-480e-a715-b39e71aa8cec",
+      "name": "Mark messages as read5",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageText": "={{ $('text').item.json.text }}",
+        "options_message": {
+          "quoted": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1376,
+        3792
+      ],
+      "id": "077ec077-4cf8-45fc-9531-af254a02c5e8",
+      "name": "Send text",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "delay": "={{ Math.floor($('text').item.json.text.split(\" \").length / 3)*1000 + Math.floor(Math.random() * (5 - 2 + 1) + 2)*1000 }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1552,
+        3792
+      ],
+      "id": "fe836a6e-3402-4572-a68b-b4e562c5cc97",
+      "name": "Send presence",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -6848,
+        3184
+      ],
+      "id": "9964feb6-19ad-4158-917c-c1b4cecadf6f",
+      "name": "openai 4.1 mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "Y5rm4TXT9mTLIczb",
+          "name": "TESTING"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -3776,
+        3520
+      ],
+      "id": "61084636-2b21-4683-90dc-1967c5f06b02",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageId": "={{ $node[\"Webhook\"].json.body.data.key.id }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -3424,
+        6128
+      ],
+      "id": "fdd20587-5270-4b08-bbad-664765c80ab1",
+      "name": "Mark messages as read1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "14feb4b4-3f70-4ff5-a158-4c697f9dd5d6",
+              "name": "text",
+              "value": "={{ $node[\"Webhook\"].json.body.data.message.conversation }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3168,
+        6128
+      ],
+      "id": "29b700ae-a6d6-43d9-89bb-1ba98be9b0f8",
+      "name": "Clean Data2"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $('Webhook1').item.json.body.instance }}",
+        "remoteJid": "={{ $('Webhook1').item.json.body.data.key.remoteJid }}",
+        "messageText": "={{ $('text').item.json.text }}",
+        "options_message": {
+          "quoted": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1648,
+        6304
+      ],
+      "id": "32ffd862-01a7-416c-ad06-2ade19b3580e",
+      "name": "Send text4",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "={{ $('Webhook1').item.json.body.instance }}",
+        "remoteJid": "={{ $('Webhook1').item.json.body.data.key.remoteJid }}",
+        "delay": "={{ Math.floor($('text').item.json.text.split(\" \").length / 3)*1000 + Math.floor(Math.random() * (5 - 2 + 1) + 2)*1000 }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1824,
+        6304
+      ],
+      "id": "2e7c4dca-791a-4960-a831-c06dc0bc6a32",
+      "name": "Send presence6",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "putrianastasya744@gmail.com",
+          "mode": "list",
+          "cachedResultName": "putrianastasya744@gmail.com"
+        },
+        "limit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Limit', `EXTRACT CUSTOMER NAME AND THEIR EVENT ID AND ALSO  CHECK AVAIBILITY DATE`, 'number') }}",
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -2912,
+        2656
+      ],
+      "id": "bcd53418-758f-4fde-813d-7db89c9db4cd",
+      "name": "GET",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Q03Cc9IFBGQctIHA",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"customer_name\": \"\",\n\"request_date\": \"\",\n\"success\": false,\n\"next_action\": \"\",\n\"ai_reply\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -2768,
+        2656
+      ],
+      "id": "f917ed4c-4372-4d94-b3ec-c4d0ff697f5e",
+      "name": "Structured Output Parser6"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1d09882d-f6ba-4d54-a694-858e56917b79",
+              "leftValue": "={{ $json.output.ai_reply.next_action }}",
+              "rightValue": "cancellation_completed",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -2384,
+        4672
+      ],
+      "id": "b6afc4ca-a131-466f-bed6-b5093f6b3378",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI",
+          "mode": "list",
+          "cachedResultName": "data client",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Nama Customer",
+              "lookupValue": "={{ $('Cancel Handling').item.json.output.customer.name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1888,
+        4528
+      ],
+      "id": "e014343c-4c25-40da-8ccc-2ae070a5023e",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uBP8QMXI8T662oju",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fb77f2ab-6b0f-4208-8d2d-67da94c6e8d0",
+              "name": "lock_date",
+              "value": "={{ $('Booking Handling').item.json.output.customer_data.event_date }}",
+              "type": "string"
+            },
+            {
+              "id": "19a02145-d140-46ea-b3bb-f06313505725",
+              "name": "TEXT",
+              "value": "={{ $('Booking Handling').item.json.output.ai_reply.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2016,
+        3424
+      ],
+      "id": "476062a4-690b-44f2-a5ff-60bc7a981860",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageText": "={{ $('Booking Handling').item.json.output.ai_reply.message }}",
+        "options_message": {
+          "quoted": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1632,
+        3424
+      ],
+      "id": "769bbbfe-9231-48ca-af46-fa81dfd61664",
+      "name": "Send text5",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE conversation_state\nSET \n  active_intent = '{{ $json.final_intent }}',\n  updated_at = NOW()\nWHERE phone = '{{ $node[\"Webhook\"].json.body.data.key.remoteJid }}';\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -6144,
+        3040
+      ],
+      "id": "7a87e36a-07a6-4b11-9bec-deca7c6ced2a",
+      "name": "ACTIVE INTENT",
+      "credentials": {
+        "postgres": {
+          "id": "YoSdoN8yhfp0ZOph",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7502262-9aaa-4b4c-9cc6-8813d46c39c4",
+              "name": "text",
+              "value": "={{ $json.output.ai_reply.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1504,
+        4928
+      ],
+      "id": "ac867446-263c-4edb-ab6a-91648e981361",
+      "name": "text1"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (5 - 2 + 1) + 2) }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1328,
+        4928
+      ],
+      "id": "36bf21dc-4015-4833-8252-369a447e91d3",
+      "name": "Delay1",
+      "webhookId": "39cba8b9-40ed-4928-ae1a-e5c64ad4e729"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageText": "={{ $('text1').item.json.text }}",
+        "options_message": {
+          "quoted": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        4928
+      ],
+      "id": "adb595d9-e24d-42a5-a618-df53cc51a99f",
+      "name": "Send text7",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "delay": "={{ Math.floor($json.text.split(\" \").length / 3)*1000 + Math.floor(Math.random() * (5 - 2 + 1) + 2)*1000 }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1136,
+        4928
+      ],
+      "id": "180c6ed5-3ff3-4036-af36-25086a92c9bd",
+      "name": "Send presence3",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5ff89ce7-72d8-42d0-acbf-712bc214382e",
+              "name": "customer name",
+              "value": "={{ $('Code in JavaScript').item.json.customer_name }}",
+              "type": "string"
+            },
+            {
+              "id": "be4db08a-5e86-40a1-be51-3fed3b714352",
+              "name": "event date",
+              "value": "={{ $('Code in JavaScript').item.json.event_date }}",
+              "type": "string"
+            },
+            {
+              "id": "cd53c9a5-08a7-4d60-ab03-9c0dcb5b9d02",
+              "name": "baby name",
+              "value": "={{ $('Code in JavaScript').item.json.baby_name }}",
+              "type": "string"
+            },
+            {
+              "id": "dca7b5f1-6498-498c-b70d-32860a1d26e8",
+              "name": "event type",
+              "value": "={{ $('Code in JavaScript').item.json.event_type }}",
+              "type": "string"
+            },
+            {
+              "id": "19706351-9291-454a-be8c-830f09e63039",
+              "name": "package name",
+              "value": "={{ $('Code in JavaScript').item.json.package_name }}",
+              "type": "string"
+            },
+            {
+              "id": "30708291-09d6-44a8-b13b-f4c6194f23ae",
+              "name": "phone number",
+              "value": "={{ $('Code in JavaScript').item.json.phone_number }}",
+              "type": "string"
+            },
+            {
+              "id": "b50a9738-021c-4434-baa7-74ed32871d16",
+              "name": "address",
+              "value": "={{ $('Code in JavaScript').item.json.address }}",
+              "type": "string"
+            },
+            {
+              "id": "84a9a2af-596a-4083-a50a-aeeef84a016c",
+              "name": "request",
+              "value": "={{ $('Code in JavaScript').item.json.request }}",
+              "type": "string"
+            },
+            {
+              "id": "08e6747c-d836-4a40-9e78-7af457339556",
+              "name": "birthday name",
+              "value": "={{ $('Code in JavaScript').item.json.baby_name }}",
+              "type": "string"
+            },
+            {
+              "id": "7e9dc999-b920-401f-925a-eddbc0547f73",
+              "name": "partner name",
+              "value": "={{ $('Code in JavaScript').item.json.partner_name }}",
+              "type": "string"
+            },
+            {
+              "id": "d03d11f1-9687-49a1-b782-6cb0559541f6",
+              "name": "age",
+              "value": "={{ $('Code in JavaScript').item.json.turn_age }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1424,
+        3424
+      ],
+      "id": "2acbcdd6-b22d-42ce-9306-8ee07137f76c",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "74bf6f16-3527-4654-a2b3-776651e24a3b",
+              "leftValue": "={{ $('Create an event').item.json.creator.self }}",
+              "rightValue": "confirmed",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1088,
+        3424
+      ],
+      "id": "5ad9e820-15c5-4290-91b9-e57f0f257aff",
+      "name": "If7"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI",
+          "mode": "list",
+          "cachedResultName": "data client",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nama Customer": "={{ $json['customer name'] }}",
+            "event_date": "={{ $json['event date'] }}",
+            "Address": "={{ $json.address }}",
+            "Baby Name": "={{ $json['baby name'] }}",
+            "Partners name": "={{ $json['partner name'] }}",
+            "optional": "={{ $json.request }}",
+            "event id": "={{ $('Create an event').item.json.id }}",
+            "phone number ": "={{ $json['phone number'] }}",
+            "instance name": "={{ $node[\"Webhook\"].json.body.instance }}",
+            "STATUS": "progress",
+            "request": "={{ $json.request }}",
+            "Tab here": "={{ $('Create an event').item.json.htmlLink }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nama Customer",
+              "displayName": "Nama Customer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "event_date",
+              "displayName": "event_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Address",
+              "displayName": "Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Baby Name",
+              "displayName": "Baby Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Partners name",
+              "displayName": "Partners name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "optional",
+              "displayName": "optional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "event id",
+              "displayName": "event id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "request",
+              "displayName": "request",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone number ",
+              "displayName": "phone number ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tab here",
+              "displayName": "Tab here",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "instance name",
+              "displayName": "instance name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1248,
+        3424
+      ],
+      "id": "75946501-b5e0-4faa-97d4-76ed0a8afe47",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uBP8QMXI8T662oju",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE conversation_state\nSET\n  intent_lock = false,\n  booking_active = false,\n  step = 'completed',\n  active_intent = NULL,\n  updated_at = NOW()\nWHERE phone = '{{ $node[\"Webhook\"].json.body.data.key.remoteJid }}'\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -864,
+        3408
+      ],
+      "id": "5be566bb-8bdb-4e22-b41d-2ff5ad921ecb",
+      "name": "CLEAN INTENT1",
+      "credentials": {
+        "postgres": {
+          "id": "YoSdoN8yhfp0ZOph",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO conversation_state (phone)\nVALUES ('{{ $node[\"Webhook\"].json.body.data.key.remoteJid }}')\nON CONFLICT (phone) DO NOTHING;\n\nSELECT\n  phone,\n  active_intent,\n  intent_lock,\n  booking_active,\n  step,\n  collected_data\nFROM conversation_state\nWHERE phone = '{{ $node[\"Webhook\"].json.body.data.key.remoteJid }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -7776,
+        3280
+      ],
+      "id": "8c8c5f3e-a62f-459e-a4a3-3aca0a37f2b5",
+      "name": "insert4",
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "credentials": {
+        "postgres": {
+          "id": "YoSdoN8yhfp0ZOph",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -3616,
+        1472
+      ],
+      "id": "4e6798c0-19f7-4506-9fd5-828e612b04a4",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1830ed74-b57f-46f8-963d-9487b8d33431",
+              "leftValue": "={{ $('insert4').item.json.active_intent }}",
+              "rightValue": "booking_request",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -6688,
+        3552
+      ],
+      "id": "29b1f2c8-5d48-4989-8f50-c76259f4f722",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "743bd58a-5b05-4179-83ef-70240eaef67c",
+              "name": "final_intent",
+              "value": "={{ $json.output.intent }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -6432,
+        3040
+      ],
+      "id": "8046cf5d-a7d5-4565-8fe9-aa68dd0b9ba2",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ee72ec1c-2a70-483c-b3dc-003305e59f6d",
+              "leftValue": "={{ \n  ['booking_request','complaint','reschedule_event','cancel_booking','availability_check']\n  .includes(($json.final_intent ?? '').toLowerCase().trim())\n}}",
+              "rightValue": "=booking_request,complaint,reschedule_event",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -5648,
+        3040
+      ],
+      "id": "552f7730-2a23-41a4-8d38-5207876daf94",
+      "name": "Intent booking2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "40588d3d-4568-4fec-a1db-4589a8c6d13a",
+              "name": "final_intent",
+              "value": "={{ $('insert4').item.json.active_intent }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -6144,
+        3376
+      ],
+      "id": "0c37c932-a85e-43db-86a5-f0abf9412686",
+      "name": "Edit Fields9"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b702921-657e-448d-91a3-3bae1ac91f05",
+              "name": "final_intent",
+              "value": "={{ $('Edit Fields4').item.json.final_intent }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -5904,
+        3040
+      ],
+      "id": "7611b301-2333-43ce-b6e6-2c4e2728ec65",
+      "name": "Edit Fields8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2fa3f7da-2ab0-4242-9eb5-536cd6ffbdc5",
+              "name": "final_intent",
+              "value": "={{ $('AI Classiefier').item.json.output.intent }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -5088,
+        3024
+      ],
+      "id": "74b89c03-2570-414d-98f5-40b0300ac652",
+      "name": "Edit Fields11"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nif (items.length === 0) {\n  return [];\n}\n\n// Ambil AI output\nconst aiOutput = items[0].json.output ?? {};\nconst aiData = aiOutput.customer_data ?? {};\n\n// Normalisasi agar tidak undefined\nconst result = {\n  event_type: aiData.event_type ?? null,\n  customer_name: aiData.customer_name ?? null,\n  phone_number: aiData.phone_number ?? null,\n  package_name: aiData.package_name ?? null,\n  address: aiData.address ?? null,\n  request: aiData.request ?? null,\n  event_date: aiData.event_date ?? null,\n  baby_name: aiData.baby_name ?? null,\n  baby_photo: null, // memang tidak dari AI\n  partner_name: aiData.partner_names ?? null,\n  birthday_name: aiData.birthday_name ?? null,\n  turn_age: aiData.turn_age ?? null,\n  lock_date: aiData.lock_date ?? null\n};\n\nconsole.log(\"EXTRACTED FROM AI:\", result);\n\nreturn [\n  {\n    json: result\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2512,
+        3520
+      ],
+      "id": "101e1323-8985-437d-b464-90e236f9e121",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "21fa749d-786c-444a-999d-212643f9b39f",
+              "leftValue": "={{ $('Booking Handling').item.json.output.ai_reply.next_action }}",
+              "rightValue": "booking_completed",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -2256,
+        3904
+      ],
+      "id": "0b351135-a74e-40c9-9ee4-9265d801f8f7",
+      "name": "If6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7502262-9aaa-4b4c-9cc6-8813d46c39c4",
+              "name": "text",
+              "value": "={{ $('Booking Handling').item.json.output.ai_reply.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1936,
+        4048
+      ],
+      "id": "17eadc85-3d73-4e50-ab33-e312b8b9c816",
+      "name": "text2"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (5 - 2 + 1) + 2) }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1744,
+        4048
+      ],
+      "id": "205f9f93-a31f-4ece-823b-2dde1fcca3fa",
+      "name": "Delay2",
+      "webhookId": "39cba8b9-40ed-4928-ae1a-e5c64ad4e729"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageText": "={{ $('text2').item.json.text }}",
+        "options_message": {
+          "quoted": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1376,
+        4048
+      ],
+      "id": "71efbe17-3e94-48e3-89e3-2db5858da794",
+      "name": "Send text8",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "delay": "={{ Math.floor($('text2').item.json.text.split(\" \").length / 3)*1000 + Math.floor(Math.random() * (5 - 2 + 1) + 2)*1000 }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1552,
+        4048
+      ],
+      "id": "bc0d03f7-9e46-44ec-90a0-094cd2fd4e2e",
+      "name": "Send presence5",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE conversation_state\nSET\n  intent_lock = false,\n  booking_active = false,\n  step = 'completed',\n  active_intent = NULL,\n  updated_at = NOW()\nWHERE phone = '{{ $node[\"Webhook\"].json.body.data.key.remoteJid }}'\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1184,
+        4048
+      ],
+      "id": "0c4df004-2dc7-4555-953f-766f57a9597a",
+      "name": "CLEAN INTENT2",
+      "credentials": {
+        "postgres": {
+          "id": "YoSdoN8yhfp0ZOph",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "putrianastasya744@gmail.com",
+          "mode": "list",
+          "cachedResultName": "putrianastasya744@gmail.com"
+        },
+        "eventId": "={{ $json['event id'] }}",
+        "useDefaultReminders": false,
+        "updateFields": {
+          "end": "={{ $('Reschedule Handling').item.json.output.request_date }}",
+          "start": "={{ $('Reschedule Handling').item.json.output.request_date }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -2064,
+        2368
+      ],
+      "id": "825ea71f-1886-4d81-8bca-a5f23f770a9c",
+      "name": "Update an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Q03Cc9IFBGQctIHA",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageText": "={{ $('Reschedule Handling').item.json.output.ai_reply }}",
+        "options_message": {
+          "quoted": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1600,
+        3024
+      ],
+      "id": "33eb92ff-e123-4c20-b428-b2f526e6f3be",
+      "name": "Send text9",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "delay": "={{ Math.floor($('Reschedule Handling').item.json.output.ai_reply.split(\" \").length / 3)*1000 + Math.floor(Math.random() * (5 - 2 + 1) + 2)*1000 }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -2032,
+        3024
+      ],
+      "id": "d08bb802-8034-49b3-adcc-551efe30a9b6",
+      "name": "Send presence7",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI",
+          "mode": "list",
+          "cachedResultName": "data client",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nama Customer": "={{ $('Get row(s) in sheet1').item.json['Nama Customer'] }}",
+            "event_date": "={{ $('Reschedule Handling').item.json.output.request_date }}",
+            "event id": "={{ $('Update an event').item.json.id }}",
+            "instance name": "={{ $('Webhook').item.json.body.instance }}"
+          },
+          "matchingColumns": [
+            "Nama Customer"
+          ],
+          "schema": [
+            {
+              "id": "Nama Customer",
+              "displayName": "Nama Customer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "event_date",
+              "displayName": "event_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Address",
+              "displayName": "Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Baby Name",
+              "displayName": "Baby Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Partners name",
+              "displayName": "Partners name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "optional",
+              "displayName": "optional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "event id",
+              "displayName": "event id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "request",
+              "displayName": "request",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "phone number ",
+              "displayName": "phone number ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Tab here",
+              "displayName": "Tab here",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "instance name",
+              "displayName": "instance name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1888,
+        2368
+      ],
+      "id": "47085ab3-f02a-4d0f-92a8-6a0eb5630576",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uBP8QMXI8T662oju",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE conversation_state\nSET\n  intent_lock = false,\n  booking_active = false,\n  step = 'completed',\n  active_intent = NULL,\n  updated_at = NOW()\nWHERE phone = '{{ $node[\"Webhook\"].json.body.data.key.remoteJid }}'\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1424,
+        3024
+      ],
+      "id": "d6153b62-4d8a-4eab-abb5-a1e0d8b6e530",
+      "name": "CLEAN INTENT3",
+      "credentials": {
+        "postgres": {
+          "id": "YoSdoN8yhfp0ZOph",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageText": "={{ $('Cancel Handling').item.json.output.ai_reply.message }}",
+        "options_message": {
+          "quoted": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -944,
+        4528
+      ],
+      "id": "ac5b903e-7f49-4156-a3c0-73d77f8a2e3f",
+      "name": "Send text10",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "putrianastasya744@gmail.com",
+          "mode": "list",
+          "cachedResultName": "putrianastasya744@gmail.com"
+        },
+        "eventId": "={{ $json['event id'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -1440,
+        4528
+      ],
+      "id": "db76c6ae-7f8c-4d6a-b329-77a3120f0703",
+      "name": "Delete an event",
+      "retryOnFail": true,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Q03Cc9IFBGQctIHA",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1808,
+        3024
+      ],
+      "id": "37712676-4b6b-4834-886c-b06e8d7b1a7f",
+      "name": "Wait2",
+      "webhookId": "1e534d27-43a1-4161-874f-d412a4b4a6b4"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI",
+          "mode": "list",
+          "cachedResultName": "data client",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Get row(s) in sheet').item.json.row_number }}",
+            "Nama Customer": "CANCEL",
+            "event_date": "CANCEL",
+            "request": "CANCEL",
+            "phone number ": "={{ $('Get row(s) in sheet').item.json['phone number '] }}",
+            "STATUS": "CANCEL BOOKING",
+            "instance name": "={{ $('Get row(s) in sheet').item.json['instance name'] }}",
+            "event id": "=cancel"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Nama Customer",
+              "displayName": "Nama Customer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "event_date",
+              "displayName": "event_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Address",
+              "displayName": "Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Baby Name",
+              "displayName": "Baby Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Partners name",
+              "displayName": "Partners name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "optional",
+              "displayName": "optional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "event id",
+              "displayName": "event id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "request",
+              "displayName": "request",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone number ",
+              "displayName": "phone number ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tab here",
+              "displayName": "Tab here",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "instance name",
+              "displayName": "instance name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -736,
+        4528
+      ],
+      "id": "42e7a417-49b5-4bf2-a4f0-a9598f70c6c0",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uBP8QMXI8T662oju",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "74bf6f16-3527-4654-a2b3-776651e24a3b",
+              "leftValue": "={{ $('Delete an event').item.json.success }}",
+              "rightValue": "confirmed",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -576,
+        4528
+      ],
+      "id": "07202264-c72c-43c7-973e-b83ceb09f4da",
+      "name": "If11"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE conversation_state\nSET\n  intent_lock = false,\n  booking_active = false,\n  step = 'completed',\n  active_intent = NULL,\n  updated_at = NOW()\nWHERE phone = '{{ $node[\"Webhook\"].json.body.data.key.remoteJid }}'\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -304,
+        4512
+      ],
+      "id": "27d98fb9-c73a-4359-9fda-43a4d0104af3",
+      "name": "CLEAN INTENT5",
+      "credentials": {
+        "postgres": {
+          "id": "YoSdoN8yhfp0ZOph",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0bb4a577-48d5-49cd-af98-0346c4283108",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1488,
+        6304
+      ],
+      "id": "119fcb2e-8213-4391-9013-80b4f8244013",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "={\n  \"customer\": {\n    \"name\": \"\"\n  },\n  \"summary_reason\": \"\",\n  \"ai_reply\": {\n    \"message\": \"\",\n    \"next_action\": \"process | cancellation_confirmed | cancellation_completed\"\n  }\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -2624,
+        6272
+      ],
+      "id": "8534c50d-7ff1-49c0-a1d6-8970da52623a",
+      "name": "Structured Output Parser4"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -2784,
+        6272
+      ],
+      "id": "e9d3f106-2a67-48e4-a33a-5fa91ac9232e",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "Y5rm4TXT9mTLIczb",
+          "name": "TESTING"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1ffd5cb6-cf6d-4096-94f4-1c064a3348b5",
+              "leftValue": "={{ $('Reschedule Handling').item.json.output.next_action }}",
+              "rightValue": "reschedule_confirmed",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -2544,
+        2512
+      ],
+      "id": "986b4a50-ceff-41ec-9683-78e2da68d0e4",
+      "name": "LOGIC"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "26b02729-469a-4c55-974f-20d6f15e6d3f",
+              "name": "next_action",
+              "value": "reschedule_completed",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1728,
+        2368
+      ],
+      "id": "52979721-d99c-4039-9acb-41a36c2e3a5e",
+      "name": "Edit Fields13"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "14fa4f7d-d669-4a92-a13d-41aaf1359b65",
+              "leftValue": "={{ $('Reschedule Handling').item.json.output.next_action }}",
+              "rightValue": "check_in_process",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -2352,
+        2832
+      ],
+      "id": "0733c0e1-75dd-47e9-af1e-c08c79145e59",
+      "name": "If9"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI",
+          "mode": "list",
+          "cachedResultName": "data client",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15vrJCN45HVMnguxV9f-zdTL2Nqg_RGeEfxmykcC14hI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Nama Customer",
+              "lookupValue": "={{ $('Reschedule Handling').item.json.output.customer_name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -2256,
+        2368
+      ],
+      "id": "06168443-c0d2-4921-bab8-c20eaff1bb3e",
+      "name": "Get row(s) in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uBP8QMXI8T662oju",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageText": "=jadwal sudah berhasil kami pindahkan ke tanggal {{ $('Reschedule Handling').item.json.output.request_date }} ya ka\n\ngak perlu di balas ya, kecuali memang masih ada pertanyaan lainnya.",
+        "options_message": {
+          "quoted": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1552,
+        2368
+      ],
+      "id": "031c0028-e89c-4264-a75b-5906b01c55f0",
+      "name": "Send text11",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE conversation_state\nSET\n  intent_lock = false,\n  booking_active = false,\n  step = 'completed',\n  active_intent = NULL,\n  updated_at = NOW()\nWHERE phone = '{{ $node[\"Webhook\"].json.body.data.key.remoteJid }}'\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1344,
+        2368
+      ],
+      "id": "134808cb-8a95-49dd-b0b6-653350b495a9",
+      "name": "CLEAN INTENT4",
+      "credentials": {
+        "postgres": {
+          "id": "YoSdoN8yhfp0ZOph",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "55cc000e-a2d5-4322-aa71-2a9bca754b08",
+              "leftValue": "={{ $('Cancel Handling').item.json.output.ai_reply.next_action }}",
+              "rightValue": "process",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1888,
+        5056
+      ],
+      "id": "1301a054-896f-4090-9ac1-be6b872f9bba",
+      "name": "If8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7502262-9aaa-4b4c-9cc6-8813d46c39c4",
+              "name": "text",
+              "value": "={{ $json.output.ai_reply.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1520,
+        5152
+      ],
+      "id": "a29e0ae2-ad70-47dc-9317-f00cc4a24852",
+      "name": "text3"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (5 - 2 + 1) + 2) }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1344,
+        5152
+      ],
+      "id": "51e861c2-7dd4-42fb-9d7b-93a4c977cf9c",
+      "name": "Delay3",
+      "webhookId": "39cba8b9-40ed-4928-ae1a-e5c64ad4e729"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "messageText": "={{ $('text3').item.json.text }}",
+        "options_message": {
+          "quoted": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -976,
+        5152
+      ],
+      "id": "1f317b4d-1c60-4cd2-b954-eea73d0ce52e",
+      "name": "Send text12",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "={{ $node[\"Webhook\"].json.body.instance }}",
+        "remoteJid": "={{ $node[\"Webhook\"].json.body.data.key.remoteJid }}",
+        "delay": "={{ Math.floor($json.text.split(\" \").length / 3)*1000 + Math.floor(Math.random() * (5 - 2 + 1) + 2)*1000 }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1136,
+        5152
+      ],
+      "id": "211bacb3-cdd6-4ce3-b886-8d5541dbca5f",
+      "name": "Send presence8",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE conversation_state\nSET\n  intent_lock = false,\n  booking_active = false,\n  step = 'completed',\n  active_intent = NULL,\n  updated_at = NOW()\nWHERE phone = '{{ $node[\"Webhook\"].json.body.data.key.remoteJid }}'\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1472,
+        2752
+      ],
+      "id": "977cbb2c-3a4c-48e3-b0a5-83b18f91a3a3",
+      "name": "CLEAN INTENT6",
+      "credentials": {
+        "postgres": {
+          "id": "YoSdoN8yhfp0ZOph",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -1680,
+        4528
+      ],
+      "id": "1783c7ab-d570-46ed-b4dd-eff30382e190",
+      "name": "Limit2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Message :{{ $node[\"Webhook\"].json.body.data.message.conversation }}\n\ndate: {{ $now.format('yyyy-MM-dd') }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# ROLE\n\nYou handle customer complaints for a decoration service.\nReply in WhatsApp style: calm, professional, concise.\n\nGoal:\nResolve issues clearly. Escalate only when necessary.\n\n--------------------------------------------------\n# STATE\n\nAllowed next_action:\n- handling_process\n- cancellation_completed (only if customer cancels service)\n\n--------------------------------------------------\n# COMPLAINT FLOW\n\nAlways:\n1. Acknowledge concern briefly.\n2. Identify the issue.\n3. Provide clear next step.\n\nDo NOT:\n- Blame\n- Admit fault\n- Offer refund/discount\n- Over-apologize\n- Mention internal processes\n\n# ESCALATION RULE\nEscalate ONLY if:\n- service failure\n- repeated unresolved issue\n- refund demand\n- legal threat\n- strong anger\n- customer asks for human\n\nIf escalating:\n- Ask for:\n  1. customer name\n  2. address\n  3. phone number\n- Before escalation, summarize:\n  - name\n  - address\n  - phone\n  - complaint issue\n\n\n# MESSAGE CONTROL\nIf customer sends multiple short messages:\n- Ask them to send complete info in one message.\n- Say requests are handled one at a time.\n- Ask them to wait for reply.\n- Keep it short.\n- No technical terms.\n\n# OUTPUT RULES\n- Return valid JSON only.\n- No text outside JSON.\n- No markdown.\n- All fields must exist.\n- Never return null.\n- Convert extracted text to lowercase.\n- Do not overwrite existing valid name.\n\n# OUTPUT FORMAT\n\n{\n  \"customer\": {\n    \"name\": \"\"\n  },\n  \"summary_reason\": \"\",\n  \"ai_reply\": {\n    \"message\": \"\",\n    \"next_action\": \"handling_process | cancellation_completed\"\n  }\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -2768,
+        6128
+      ],
+      "id": "a6a63d6f-639b-47c6-979d-dab67a77a18e",
+      "name": "Complain Handling"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Message:{{ $json.Message }}\n\nCurrent time: {{  $now.format( 'dd/ll/yyyy') }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# ROLE\nYou are a friendly and professional customer service assistant handling booking cancellation requests.Your goal safely confirm cancellation while collecting required information in correct order.\nBefore you set cancelattion_confirmed, you must ask customer name when it's provided you should lock customer name.\n\n# STATE MACHINE\nAllowed next_action values:\nUse:\nprocess when:\n- customer name not provided yet\n- cancellation reason not provided yet\n- still collecting required information\n\n\ncancellation_confirmed when:\n- customer name is locked\n- cancellation reason collected\n- customer informed:\n  • no refund\n  • service will be stopped\n- you have asked:\n  \"do you want to continue with the cancellation?\"\n- waiting for customer confirmation\n- Asking for clarify to customer if they still want to cancel booking\n\ncancellation_completed.\n- customer name is locked\n- cancellation reason locked\n- customer explicitly confirms (yes / agree / continue)\n- event deletion in CRM finished\n\n# CONVERSATION CONTROL\nIf customer sends multiple short messages:\n- Politely ask them to send complete information in one message.\n- Inform requests are handled one at a time.\n- Ask them to wait for a reply before sending another message.\n- Keep it short and friendly.\n- Never mention technical terms (system, api, webhook, automation, processing).\n\n# TONE RULES\n- Friendly\n- Reassuring\n- Simple and concise\n- Natural human tone\n- No robotic responses\n- Minimize tokens without losing clarity\n\n# DATA RULES\n- Convert all extracted text to lowercase before processing.\n- Never erase previously collected valid data.\n- Never return null.\n- All fields must exist.\n- Always return valid JSON only.\n- No explanations.\n- No markdown.\n- No text outside JSON.\n\n# REQUIRED OUTPUT FORMAT\n\n{\n  \"customer\": {\n    \"name\": \"\"\n  },\n  \"summary_reason\": \"\",\n  \"ai_reply\": {\n    \"message\": \"\",\n    \"next_action\": \"process | cancellation_confirmed | cancellation_completed\"\n  }\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -2880,
+        4672
+      ],
+      "id": "939f3ddf-f165-49b8-94ef-06f2cb6d0604",
+      "name": "Cancel Handling",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Message:{{ $('Clean Data').item.json.Message }}\n\nDate: {{ $now.format('yyyy-MM-dd') }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# SYSTEM ROLE\nYou are Thesyah, the upbeat and friendly AI customer support for Thesyah decoration. You handle availability checks, booking creation, using Google Calendar.\n\nIf customer mention event date not very clearly, ask for clarrity before using 'Get events' on google calendar.\n\n## CONVERSATION FLOW RULE\n- if customer sends multiple short messages in a row, gently remind them to send complete information in one message.\n- Inform the customer that the system processes one request at a time.\n- Ask them to wait for a response before sending another message.\n- Keep the reminder friendly and concise.\n- Never mention technical terms like system, webhook, API, processing, or automation.\n\n## TOOLS\n- GET EVENTS : Must always use this tool to check avaibility date after customer mention their event date.\n\n\n** AVAILABILITY RULE (GET EVENTS REQUIRED) ** \n- Slot < 2 → date can be booked → inform politely\n- Slot ≥ 2 → date full → offer alternatives\n- Never imply availability without checking\n\n## TONE & STYLE GUIDELINES\n- Start conversations with a cheerful greeting them if ONLY you haven't had conversation with customer for the first time and use conversational Indonesian\n- Simple, clear, concise\n- Adapt to customer mood\n- Non-robotic, non-template\n- Minimize output tokens while maintaining helpfulness, quality, and accuracy\n\n## GENERAL RULES (STRICT)\n1. ALWAYS use Google calendar 'GET EVENTS' to check availability BEFORE asking for full booking details and before any booking action\n2. Never assume availability\n3. Never ASK about specific event time\n4. If message is unclear ask for clarity\n5. Do not mention internal system terms\n6. Never guess or assume an event date or year\n7. Words like “tomorrow”, “the day after”, “next week”, or “next month” are NOT valid dates by themselves. You must ask the customer to confirm the exact date and year.\n\n## IMPORTANT\n- IF customer mentions event date AND date is available,\n- THEN lock_date = \"YYYY-MM-DD\"\n- ELSE lock_date = \"\" \n- You MUST only set next_action into 'booking_confirmed' only if the customer's message explicitly contains all of the following required fields like customer name,date of the event,the address,package name,phone number,type of event (all the format booking based on type event). Do not repeat the same next_action value consecutively in the conversation flow\n\n## SUPPORTED ACTIONS\n1. Check availability\n2. Create booking\n\nHere is format booking you SHOULD follow. DO NOT ever change iT.Do not send format booking separately. You must include all the require based on event type. Do not hallucination you MUST follow this format below.\n\n1. Customer name :\n2. Phone Number :\n3. Baby's name :\n4. Package name :\n5. Event Date :\n6. Address :\n7. Request : \n8. Baby photo MUST be requested conversationally\nbut MUST NOT block JSON completion.\n\n## Engagement\n1. Customer name :\n2. Phone Number :\n3. Partner name :\n4. Package name :\n5. Address :\n6. Phone number :\n7. Request :\n8. Event date :\n\n## Birthday\n1. Customer name :\n2. Package Name :\n3. Birthday name\n4. Turn Age :\n5. Address :\n6. Request :\n7. Event date :\n\n## Collected customer data\n- You must always extract/collecting \n1.Customer name\n2.Event type\n3.Event date\n4.Package name\n5.The address of the customer\n6.Request (only when customer explicity)\n7.Baby name (only for aqiqah or birthday)\n8.Partner name (only for engagement)\n9.Phone number\n\n## Instruction\n- When customer mention the date of the event not very cleary, you MUST ask clarrificcation date  of the event when it's needed before you use 'GET EVENTS' to check avaibility date.\n- partner_names must be provided when event_type is engagement or wedding\n- baby_name must be provided when event_type is aqiqah\n- Do not hallucinate missing names\n- Convert all text to lowercase before extracting/collecting\n- You MUST lock customer data after you extracting/collecting\n- After you set booking_confirmed ,politely inform the customer that \nh-1 we will set the decoration at their address, about the time maybe in the afternoon or night depends on our rute, we will let them know later.\n\n## OUTPUT RULE (VERY IMPORTANT)\n- ALWAYS respond in VALID JSON\n- DO NOT include any text outside JSON\n- Fill the JSON fields according to the schema provided.\n- Do NOT add, remove, or rename fields.\n- Do NOT include explanations, markdown, or text outside JSON.\n- If a field is not mentioned by the customer, leave it as an empty string \"\".\n- All fields MUST exist\n- Dates MUST be ISO format: YYYY-MM-DD. If customer send the date like this 3/1/2026, you always MUST turn into 2026-1-3 \n- MUST turn the json feild.\n- ✅ Boolean must be true | false (never \"yes\", \"ok\", \"fix\")\n\n\nOUTPUT SCHEMA (MUST MATCH EXACTLY):\n\n{\n  \"intent\": {\n    \"booking_approved\": false\n  },\n  \"customer_data\": {\n    \"customer_name\": \"\",\n    \"event_type\": \"\",\n    \"event_date\": \"\",\n    \"package_name\": \"\",\n    \"address\": \"\",\n    \"request\": \"\",\n    \"baby_name\": \"\",\n    \"partner_names\": \"\",\n    \"phone_number\": \"\",\n    \"lock_date\": \"\"\n  },\n  \"ai_reply\": {\n    \"message\": \"\",\n    \"next_action\": \"ready_for_booking | booking_confirmed | booking_completed\"\n  }\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -2960,
+        3520
+      ],
+      "id": "7f1fff9b-b0e8-47b3-b569-6767a8060d1c",
+      "name": "Booking Handling",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Message:{{ $json.Message }}\n\nCurrent time: {{ $now.format('yyyy-MM-dd') }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# SYSTEM ROLE\nYou are Thesyah, a friendly, upbeat, and professional assistant helping customers reschedule their decoration event using Google Calendar.Your primary tasks to safely and accurately reschedule the customer’s event date. Before you set reschedule_confirmed, you must ask customer name when it's provided you should lock customer name.\n\nYou MUST strictly follow availability validation before confirming any reschedule.\n\n# CORE AVAILABILITY RULE (MANDATORY)\nBefore setting next_action to \"reschedule_confirmed\":\n1. You MUST call \"Get Events\" to check availability for the requested date.\n2. Apply slot logic:\n   - If slot count < 2 → date is available → success = true\n   - If slot count ≥ 2 → date is full → success = false\n3. NEVER assume availability without checking.\n4. If customer already provided a date, you MUST NEVER change request_date to empty or null.\n\n--------------------------------------------------\n# CONVERSATION FLOW RULE\nIf customer sends multiple short messages in a row:\n- Politely remind them to send complete information in one message.\n- Inform them that requests are handled one at a time.\n- Ask them to wait for a reply before sending additional messages.\n- Keep it friendly and concise.\n- NEVER mention technical terms (system, webhook, api, automation, processing).\n\n# REQUIRED TOOL\n- Get Events → used ONLY to check date availability\n\n# REQUIRED OUTPUT STRUCTURE\n- You MUST ALWAYS return valid JSON.\n- No text outside JSON.\n- No markdown.\n- No explanations.\n\nAll fields are must REQUIRED.\n\n{\n  \"customer_name\": \"\",\n  \"request_date\": \"\",\n  \"success\": false,\n  \"next_action\": \"check_in_process | reschedule_confirmed | reschedule_completed\",\n  \"ai_reply\": \"\"\n}\n\n# FIELD RULES\n1. customer_name\n- Must ask for name if not provided.\n- Never overwrite if already given.\n2. request_date\n- Extract requested date.\n- Convert to ISO format: YYYY-MM-DD\n- Example:\n  3/1/2026 → 2026-01-03\n- If unclear or missing → \"\"\n3. success\n- true → date available (after Get Events check)\n- false → date full OR not yet checked\n4. next_action\n- check_in_process\n  Use when:\n  - Name missing\n  - Date missing\n  - Still collecting information\n  - Availability not checked yet\n- reschedule_confirmed\n  Use ONLY when:\n  - customer_name exists\n  - request_date exists\n  - Get Events already called\n  - Slot < 2\n  - success = true\n- reschedule_completed\n  NEVER use\n\n5. ai_reply\n- Concise, Friendly, Human tone, No technical wording\n\n# ADDITIONAL STRICT RULES\n- Convert all extracted text to lowercase before processing.\n- Never return empty values if already provided.\n- Never change a valid request_date to empty.\n- Never return null.\n- Never skip required fields.\n- Never output anything outside JSON.\n- Dates MUST be formatted exactly YYYY-MM-DD.\n- Always preserve previously collected valid information.\n- Minimize output tokens while maintaining clarity and accuracy.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -2944,
+        2512
+      ],
+      "id": "b174a190-d8c9-41e5-b20c-654607bb334c",
+      "name": "Reschedule Handling",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Message:{{ $('Clean Data4').item.json.Message }}\n",
+        "options": {
+          "systemMessage": "=## SYSTEM ROLE\n\nYou are Thesyah, the upbeat and friendly AI customer support for Thesyah decoration.Your main role is to help customers understand products, answer inquiries, and provide suitable decoration suggestions based on their event needs. Ask what type of decoration are they looking,and their name ONLY if they haven't mentioned it. If Customer Ask about PRICE use Google Sheets to give the pricelist. Only if they ASK. Do not MAKE UP any information from  \"Google Sheets\". Do not PROMISE that you already set up their date in our system, it is NOT your job. if They want to booking,you MUST inform customer that you will send format booking to them to fill. And  just simply say \"i wanna booking\".\n\n## Rules when to use \"Google Sheets\" to give pricelist decoration\n\n- Send the pricelist. Based on customer's event. do not send all the sheets information\n- When customer ask aqiqah price. Send price aqiqah in sheets name \"aqiqah package list\"\n- When customer ask lamaran/engagement. Send price engagement/lamaran in sheets name \"engagement/package list\"\n- When customer ask birthday price. Send birtday price  in sheets name \"Birthday package list\"\n- Never send all those information. Only choose pricelist from the event.\n\n\n## CORE RESPONSIBILITIES\n\n1. Understand customer messages even if they use simple or informal words\n2. Respond based on what the customer asks or needs\n3. Help with:\n- Product explanation\n- Decoration suggestions\n- Event-related inquiries\n- Ask for clarification only if the message is unclear or incomplete\n- Never **promise** or imply that a booking slot is already secured\n\n## IMPORTANT\n\n- Read the conversation history carefully. Follow-up questions about what you just discussed. Use context to understand what they're asking about\n- You SHOULD minimize output tokens as much as possible while maintaining helpfulness, quality, and accuracy\n\n## TONE & STYLE GUIDELINES\n\n- Speak naturally, politely, and conversationally.\n- Do not sound robotic or overly formal.\n- Adapt your tone based on the user's mood.\n- Use simple, everyday Indonesian.\n- Avoid repetitive sentence patterns and template  responses\n- Clear and concise\n- Respond like a real customer service person\n\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -2736,
+        1472
+      ],
+      "id": "0bd25a94-77f4-4a35-8355-6cf4e535b0f1",
+      "name": "General"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=text:{{ $node[\"Webhook\"].json.body.data.message.conversation }}\n\ndate : {{ $now }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=## Overview\n\nYou are an AI text classifier for decoration service\n(Aqiqah, Wedding, Birthday, Engagement).\n\nYour task:\n- Classify the user's message \n- Return ONE intent only (never multiple)\n- Use ONLY the allowed intent values\n- Handle short, informal, mixed-language WhatsApp messages\n- Output valid JSON only\n- Do NOT reply to the customer\n- Do NOT add explanations or extra text\n- If the intent is unclear, use \"general_question\"\n- If the customer say they wanna talk to the owner the intent SHOULD turns complaint.\n- If customer send format booking contains their name,address,event type,event date, explanations or instructions, turns intent BOOKING_REQUEST. \n- NEVER ever let intent turn empty/null.\n\nAttention\n- partner_names must be provided when event_type is engagement or wedding\n- baby_name must be provided when event_type is aqiqah\n- Do not hallucinate missing names\n- Convert all text to lowercase before extracting\n- NEVER let intent as null/empty. Must Always exist\n\nAllowed intents (ENUM):\n- product_inquiry\n- availability_check\n- booking_request\n- reschedule_event\n- cancel_booking\n- complaint\n- general_question\n\nUrgency rules:\n- High: complaint, cancel, angry tone, \"segera\", \"urgent\"\n- Medium: booking, availability, Reschdule date, cancel booking\n- Low: product inquiry, general questions\n\n\nOutput format (STRICT):\n\n{\n  \"intent\": \"string\",\n  \"event_type\": \"string | null\",\n  \"event_date\": \"YYYY-MM-DD | null\",\n  \"client_name\": \"string | null\",\n  \"package_name\": \"string | null\",\n  \"partner_names\": \"string\",\n  \"baby_name\": \"string | null\",\n  \"urgency\": \"low | medium | high\",\n  \"confidence\": 0.0\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -6848,
+        3040
+      ],
+      "id": "499227b4-8f75-408f-9417-24aa73921f96",
+      "name": "AI Classiefier"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $('Webhook').item.json.body.instance }}",
+        "remoteJid": "=6285256162331",
+        "messageText": "={{ $json.Summary }}",
+        "options_message": {
+          "quoted": {},
+          "mentions": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1712,
+        5920
+      ],
+      "id": "990364e6-37ad-4df9-9f3c-f642926f11e6",
+      "name": "Reply",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $('Webhook').item.json.body.instance }}",
+        "remoteJid": "=6285256162331",
+        "messageText": "={{ $json.Summary }}",
+        "options_message": {
+          "quoted": {},
+          "mentions": {}
+        }
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1536,
+        5920
+      ],
+      "id": "f6272160-3746-44e3-9faf-eee483477bf3",
+      "name": "Human notify",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hNLgDR4vqDf88t9S",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE conversation_state\nSET\n  intent_lock = false,\n  booking_active = false,\n  step = 'completed',\n  active_intent = NULL,\n  updated_at = NOW()\nWHERE phone = '{{ $node[\"Webhook\"].json.body.data.key.remoteJid }}'\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1376,
+        5920
+      ],
+      "id": "f0207fac-ebdc-4697-b3f3-fe3c0bb94783",
+      "name": "CLEAN INTENT",
+      "credentials": {
+        "postgres": {
+          "id": "YoSdoN8yhfp0ZOph",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## AI Take an Action",
+        "height": 320,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3008,
+        4640
+      ],
+      "typeVersion": 1,
+      "id": "60810e21-e21a-43dd-a1b9-9f4f7a212b25",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "## AI Take an Action",
+        "height": 320,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3040,
+        3472
+      ],
+      "typeVersion": 1,
+      "id": "f72bcbc1-1bce-43dd-9f5c-7ddf2e40fd87",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "putrianastasya744@gmail.com",
+          "mode": "list",
+          "cachedResultName": "putrianastasya744@gmail.com"
+        },
+        "limit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Limit', ``, 'number') }}",
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', `to check avaibility date`, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -2928,
+        3664
+      ],
+      "id": "90ea415b-bc4a-4e4a-ab9d-33e0cfa62594",
+      "name": "Check availability",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Q03Cc9IFBGQctIHA",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## AI Take an Action",
+        "height": 320,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3008,
+        2464
+      ],
+      "typeVersion": 1,
+      "id": "b09af32b-8182-405e-aacc-5120f3cd2189",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "content": "## AI Take an Action",
+        "height": 320,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -6960,
+        2992
+      ],
+      "typeVersion": 1,
+      "id": "f0ff365c-d28c-460d-8c31-fccdba15e9bc",
+      "name": "Sticky Note15"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.konsultankuai.site",
+            "user-agent": "axios/1.13.2",
+            "content-length": "1483",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "172.18.0.1",
+            "x-forwarded-host": "n8n.konsultankuai.site",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "8b298f5e679f",
+            "x-real-ip": "172.18.0.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "admin",
+            "data": {
+              "key": {
+                "remoteJid": "6285184516184@s.whatsapp.net",
+                "remoteJidAlt": "6285184516184@s.whatsapp.net",
+                "fromMe": false,
+                "id": "3EB00530BBE3DF57408A11",
+                "participant": "",
+                "addressingMode": "lid"
+              },
+              "pushName": "Tasya",
+              "status": "DELIVERY_ACK",
+              "message": {
+                "conversation": "halo ka,",
+                "messageContextInfo": {
+                  "threadId": [],
+                  "deviceListMetadata": {
+                    "senderKeyIndexes": [],
+                    "recipientKeyIndexes": [],
+                    "senderKeyHash": {
+                      "0": 93,
+                      "1": 88,
+                      "2": 79,
+                      "3": 120,
+                      "4": 134,
+                      "5": 212,
+                      "6": 15,
+                      "7": 30,
+                      "8": 81,
+                      "9": 58
+                    },
+                    "senderTimestamp": {
+                      "low": 1772601827,
+                      "high": 0,
+                      "unsigned": true
+                    },
+                    "senderAccountType": 0,
+                    "receiverAccountType": 0,
+                    "recipientKeyHash": {
+                      "0": 130,
+                      "1": 83,
+                      "2": 232,
+                      "3": 72,
+                      "4": 22,
+                      "5": 99,
+                      "6": 154,
+                      "7": 107,
+                      "8": 175,
+                      "9": 78
+                    },
+                    "recipientTimestamp": {
+                      "low": 1771068892,
+                      "high": 0,
+                      "unsigned": true
+                    }
+                  },
+                  "deviceListMetadataVersion": 2,
+                  "messageSecret": {
+                    "0": 78,
+                    "1": 186,
+                    "2": 27,
+                    "3": 211,
+                    "4": 141,
+                    "5": 139,
+                    "6": 69,
+                    "7": 138,
+                    "8": 238,
+                    "9": 147,
+                    "10": 176,
+                    "11": 49,
+                    "12": 247,
+                    "13": 112,
+                    "14": 243,
+                    "15": 248,
+                    "16": 4,
+                    "17": 209,
+                    "18": 70,
+                    "19": 108,
+                    "20": 52,
+                    "21": 223,
+                    "22": 31,
+                    "23": 8,
+                    "24": 145,
+                    "25": 26,
+                    "26": 71,
+                    "27": 168,
+                    "28": 174,
+                    "29": 144,
+                    "30": 250,
+                    "31": 120
+                  }
+                }
+              },
+              "messageType": "conversation",
+              "messageTimestamp": 1772633555,
+              "instanceId": "80ae7ac0-d5f0-4689-99a4-c208ae80ae92",
+              "source": "web"
+            },
+            "destination": "https://n8n.konsultankuai.site/webhook/077693EA84A2-4B74-A39B-66D8C7B7AC55",
+            "date_time": "2026-03-04T11:12:35.381Z",
+            "sender": "6282125331691@s.whatsapp.net",
+            "server_url": "https://konsultankuai.site",
+            "apikey": "077693EA84A2-4B74-A39B-66D8C7B7AC55"
+          },
+          "webhookUrl": "https://n8n.konsultankuai.site/webhook/077693EA84A2-4B74-A39B-66D8C7B7AC55",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Reschedule Handling": [
+      {
+        "json": {
+          "output": {
+            "customer_name": "hanifa",
+            "request_date": "2026-03-17",
+            "success": true,
+            "next_action": "reschedule_confirmed",
+            "ai_reply": "Tanggal 17 Maret 2026 tersedia untuk dekorasi aqiqah. Saya sudah mengganti tanggal reservasi untuk Hanifa ke tanggal tersebut. Terima kasih!"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "OPENAI 4.1 MINI1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Reschedule Handling",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Cancel Handling",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Booking Handling",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Booking Handling",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Wait7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "Send presence6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait7": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait8": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait9": {
+      "main": [
+        [
+          {
+            "node": "Mark messages as read2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ouput Intent": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Classiefier",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "text": {
+      "main": [
+        [
+          {
+            "node": "Delay",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait10": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait11": {
+      "main": [
+        [
+          {
+            "node": "Mark messages as read1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send presence1": {
+      "main": [
+        [
+          {
+            "node": "Send text1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aqiqah Price": {
+      "ai_tool": [
+        [
+          {
+            "node": "General",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Birthday Price": {
+      "ai_tool": [
+        [
+          {
+            "node": "General",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Send presence1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Price Engagement": {
+      "ai_tool": [
+        [
+          {
+            "node": "General",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delay": {
+      "main": [
+        [
+          {
+            "node": "Send presence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini 2.5 flash": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "General",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Booking Handling",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean Data": {
+      "main": [
+        [
+          {
+            "node": "Booking Handling",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "General",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Cancel Handling",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Reschedule Handling",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Booking Handling",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "logical number": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Logical Intent": {
+      "main": [
+        [
+          {
+            "node": "AI Classiefier",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "classfy": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait12",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait13",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait11",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Send presence4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser5": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Cancel Handling",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event": {
+      "main": [
+        [
+          {
+            "node": "Send text5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Send text10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait12": {
+      "main": [
+        [
+          {
+            "node": "Mark messages as read5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send text3": {
+      "main": [
+        [
+          {
+            "node": "CLEAN INTENT6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean Data1": {
+      "main": [
+        [
+          {
+            "node": "Reschedule Handling",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait13": {
+      "main": [
+        [
+          {
+            "node": "Mark messages as read4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark messages as read4": {
+      "main": [
+        [
+          {
+            "node": "Clean Data3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean Data3": {
+      "main": [
+        [
+          {
+            "node": "Cancel Handling",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "logical number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark messages as read2": {
+      "main": [
+        [
+          {
+            "node": "General",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields10": {
+      "main": [
+        [
+          {
+            "node": "insert4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean Data4": {
+      "main": [
+        [
+          {
+            "node": "Wait9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send presence4": {
+      "main": [
+        [
+          {
+            "node": "Send text3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark messages as read": {
+      "main": [
+        [
+          {
+            "node": "Clean Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark messages as read5": {
+      "main": [
+        [
+          {
+            "node": "Clean Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send presence": {
+      "main": [
+        [
+          {
+            "node": "Send text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send text": {
+      "main": [
+        []
+      ]
+    },
+    "openai 4.1 mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Classiefier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Mark messages as read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark messages as read1": {
+      "main": [
+        [
+          {
+            "node": "Clean Data2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean Data2": {
+      "main": [
+        [
+          {
+            "node": "Complain Handling",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send presence6": {
+      "main": [
+        [
+          {
+            "node": "Send text4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET": {
+      "ai_tool": [
+        [
+          {
+            "node": "Reschedule Handling",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser6": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Reschedule Handling",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Limit2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Create an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ACTIVE INTENT": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "text1": {
+      "main": [
+        [
+          {
+            "node": "Delay1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delay1": {
+      "main": [
+        [
+          {
+            "node": "Send presence3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send presence3": {
+      "main": [
+        [
+          {
+            "node": "Send text7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send text5": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "CLEAN INTENT1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "insert4": {
+      "main": [
+        [
+          {
+            "node": "Logical Intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "Clean Data4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields9",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "ACTIVE INTENT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields9": {
+      "main": [
+        [
+          {
+            "node": "classfy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intent booking2": {
+      "main": [
+        [
+          {
+            "node": "Update",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "classfy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields8": {
+      "main": [
+        [
+          {
+            "node": "Intent booking2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields11": {
+      "main": [
+        [
+          {
+            "node": "classfy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        [
+          {
+            "node": "text",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "text2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "text2": {
+      "main": [
+        [
+          {
+            "node": "Delay2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delay2": {
+      "main": [
+        [
+          {
+            "node": "Send presence5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send presence5": {
+      "main": [
+        [
+          {
+            "node": "Send text8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send text8": {
+      "main": [
+        [
+          {
+            "node": "CLEAN INTENT2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update an event": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send presence7": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send text9": {
+      "main": [
+        [
+          {
+            "node": "CLEAN INTENT3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an event": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Send text9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send text10": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If11": {
+      "main": [
+        [
+          {
+            "node": "CLEAN INTENT5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "If11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send text7": {
+      "main": [
+        []
+      ]
+    },
+    "Send text4": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser4": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Complain Handling",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Complain Handling",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LOGIC": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields13": {
+      "main": [
+        [
+          {
+            "node": "Send text11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If9": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send presence7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Update an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send text11": {
+      "main": [
+        [
+          {
+            "node": "CLEAN INTENT4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [
+          {
+            "node": "text1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "text3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "text3": {
+      "main": [
+        [
+          {
+            "node": "Delay3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delay3": {
+      "main": [
+        [
+          {
+            "node": "Send presence8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send text12": {
+      "main": [
+        []
+      ]
+    },
+    "Send presence8": {
+      "main": [
+        [
+          {
+            "node": "Send text12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit2": {
+      "main": [
+        [
+          {
+            "node": "Delete an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Complain Handling": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancel Handling": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Booking Handling": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reschedule Handling": {
+      "main": [
+        [
+          {
+            "node": "LOGIC",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "General": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Classiefier": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply": {
+      "main": [
+        [
+          {
+            "node": "Human notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Human notify": {
+      "main": [
+        [
+          {
+            "node": "CLEAN INTENT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check availability": {
+      "ai_tool": [
+        [
+          {
+            "node": "Booking Handling",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "6e2bb6da-56f8-485e-8dec-e47e7d055899",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d116f3594dbf6b384631074cdaaa1e1e41d1ad0872ff7198ae0b471a179e9d44"
+  },
+  "id": "V8LUwFdx1bmei2MY",
+  "tags": []
+}
