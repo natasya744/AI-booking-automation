@@ -18,4 +18,4 @@ Features
 - reminder before appointment/installation
 
 
-# i still don't attach my worflow jaon file yet
+# i still don't attach my booking reception worflow json file yet cuz i still have many key i should keep it
