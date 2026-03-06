@@ -1,4 +1,4 @@
-# AI-booking-automation
+# n8n flow
 
 Automation system for handling customer booking.
 
@@ -16,3 +16,6 @@ Features
 - store data in CRM
 - schedule to Google Calendar
 - reminder before appointment/installation
+
+
+# i still don't attach my worflow jaon file yet
