@@ -16,4 +16,3 @@ Features
 - store data in CRM
 - schedule to Google Calendar
 - reminder before appointment/installation
-
