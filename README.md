@@ -17,5 +17,3 @@ Features
 - schedule to Google Calendar
 - reminder before appointment/installation
 
-
-# i still don't attach my booking reception worflow json file yet cuz i still have many key i should keep it
