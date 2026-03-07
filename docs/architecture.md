@@ -1,4 +1,4 @@
-System Architecture
+#System Architecture
 
 Customer message
 ↓
@@ -10,4 +10,6 @@ Data stored in database/update/deleted
 ↓
 Schedule sent to Google Calendar/update/delete
 ↓
-follow up/reminder installation
+Ai response
+↓
+follow up reminder/installation
