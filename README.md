@@ -1,6 +1,6 @@
 # n8n flow
 
-Automation system for handling customer booking.
+Automation system for handling customer receptions for decoration
 
 Tech Stack
 - n8n
